@@ -1,4 +1,4 @@
-import { configuracion } from '@/app/configuracion'
+import { configuracion } from '@/config/configuracion'
 import { ConnectionConfiguration } from 'tedious'
 
 type BaseDedatos = string | null | undefined

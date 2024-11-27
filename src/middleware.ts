@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { esIpValida } from './app/esIpValida'
+
+import { esIpValida } from './utils/esIpValida'
 
 export function middleware(request: NextRequest) {
   const listaIp = process.env.LISTA_BLANCA?.split(',') || []
@@ -14,5 +15,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.json({ error: 'prohibido' }, { status: 403 })
   }
 
+  // Pasar el controlo al manejador de solicitudes siguiente
   return NextResponse.next()
 }
