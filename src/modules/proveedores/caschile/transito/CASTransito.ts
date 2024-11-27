@@ -3,7 +3,7 @@ import { asignaSeleccion } from "@/utilidades/asignaSeleccion";
 import { ParametroSQL, ejecutaConsulta } from "@/utilidades/ejecutaConsulta";
 import { ConnectionConfiguration, TYPES } from "tedious";
 import { columnas_funcionario } from "../../personal/modelo/columnas_funcionario";
-import { antiguedad_licencia } from "./antiguedad_licencia";
+import { antiguedad_licencia } from "../../../../sql/antiguedad_licencia";
 
 export class CASTransito extends BaseDeDatos {
   private configuracion: ConnectionConfiguration;
