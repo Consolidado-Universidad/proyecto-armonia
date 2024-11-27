@@ -1,0 +1,41 @@
+services:
+  armonia-backend:
+    restart: "always"
+    image: node:current-alpine3.20
+    command: sh -c "npm install && npm run build && npm run start"
+    volumes:
+      - ./src:/usr/src/service
+    working_dir: /usr/src/service
+    ports:
+      - "3000:3000"
+    networks:
+      - backend_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.armonia-backend.rule=Host(${DOMINIO})"
+      - "traefik.http.routers.armonia-backend.entrypoints=websecure"
+      - "traefik.http.routers.armonia-backend.tls=true"
+      - "traefik.http.routers.armonia-backend.tls.certresolver=armonia"
+
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.armonia.acme.tlschallenge=true"
+      - "--certificatesresolvers.armonia.acme.email=${EMAIL}"
+      - "--certificatesresolvers.armonia.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
