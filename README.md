@@ -42,4 +42,3 @@ Esta configuración usa Traefik para configurar un Servidor Proxy Inverso, por l
 Los endpoints disponibles actualmente son:
 
 - `/transito?run=12345678-9`
-# proyecto-armonia
